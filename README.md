@@ -1,5 +1,7 @@
 # GO-UTIL
 
+Please note this is public repositiry, do not commit any secret and organization related information here  
+
 ## Purpose
 
 Every folder is supposed to be a packages, which can be used in go based service/scripts being used in limetray.
