@@ -7,3 +7,4 @@ Example
  - AWS Credential Helper
  - Custom Logger
  - SQS Consumer Helper
+ - Slack Notification
