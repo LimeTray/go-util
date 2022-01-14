@@ -11,6 +11,20 @@ Example
  - SQS Consumer Helper
  - Slack Notification
 
+## Sample Usage
+```
+package main
+
+import (
+	logger "github.com/LimeTray/go-util/logger"
+)
+
+func main() {
+	Logger := logger.RegisterLogger("api-gateway")
+	Logger.Info("Application Started")
+}
+```
+
 
 # How to user private repo in golang
 
