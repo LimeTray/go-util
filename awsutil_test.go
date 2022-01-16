@@ -80,7 +80,7 @@ func TestCreateDomainName(t *testing.T) {
 	domainName := os.Getenv("TEST_DOMAIN_NAME")
 	arn := os.Getenv("TEST_CERT_ARN")
 
-	if err := awsutil.CreateNewDomain(
+	if err := awsutil.CreateNewGatewayDomain(
 		&domainName,
 		&arn,
 	); err != nil {
@@ -113,7 +113,7 @@ func TestCreateApiMapping(t *testing.T) {
 	domainName := os.Getenv("TEST_DOMAIN_NAME")
 	apiId := os.Getenv("TEST_API_ID")
 	stage := os.Getenv("TEST_STAGE")
-	if err := awsutil.CreateApiMapping(&apiId, &domainName, &stage); err != nil {
+	if err := awsutil.CreateGatewayApiMapping(&apiId, &domainName, &stage); err != nil {
 		t.Fatal(err.Error())
 	}
 }

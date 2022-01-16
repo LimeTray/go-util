@@ -12,7 +12,7 @@ func getGatewayClient() *apigatewayv2.ApiGatewayV2 {
 	return svc
 }
 
-func CreateNewDomain(domainname *string, certArn *string) error {
+func CreateNewGatewayDomain(domainname *string, certArn *string) error {
 	input := apigatewayv2.CreateDomainNameInput{
 		DomainName: domainname,
 		DomainNameConfigurations: []*apigatewayv2.DomainNameConfiguration{
@@ -34,7 +34,7 @@ func CreateNewDomain(domainname *string, certArn *string) error {
 	return nil
 }
 
-func CreateApiMapping(apiId *string, domainName *string, stage *string) error {
+func CreateGatewayApiMapping(apiId *string, domainName *string, stage *string) error {
 	// To map api gateway to gateway domain name
 	svc := getGatewayClient()
 	input := apigatewayv2.CreateApiMappingInput{
