@@ -1,5 +1,7 @@
 # GO-UTIL
 
+Please note this is public repositiry, do not commit any secret and organization related information here  
+
 ## Purpose
 
 Every folder is supposed to be a packages, which can be used in go based service/scripts being used in limetray.
@@ -8,6 +10,20 @@ Example
  - Custom Logger
  - SQS Consumer Helper
  - Slack Notification
+
+## Sample Usage
+```
+package main
+
+import (
+	logger "github.com/LimeTray/go-util/logger"
+)
+
+func main() {
+	Logger := logger.RegisterLogger("api-gateway")
+	Logger.Info("Application Started")
+}
+```
 
 
 # How to user private repo in golang
