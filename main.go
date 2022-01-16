@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Starting awsUtil")
+	fmt.Println("Starting go util")
 
 }

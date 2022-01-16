@@ -51,7 +51,10 @@ func CreateApiMapping(apiId *string, domainName *string, stage *string) error {
 	return nil
 }
 
-func GetGatewayDomainByName(domainName *string) (string, error) {
+// Hosted zone id for gatewaydomain
+// Hosted zone  for gatewaydomain
+// error
+func GetGatewayDomainByName(domainName *string) (string, string, error) {
 	// To get regional id of the domain name
 	// This will be later used to map regional domain to route53
 	svc := getGatewayClient()
@@ -60,13 +63,13 @@ func GetGatewayDomainByName(domainName *string) (string, error) {
 	}
 	if result, err := svc.GetDomainName(&input); err != nil {
 		Logger.Error(err.Error())
-		return "", err
+		return "", "", err
 	} else {
 		// If no config is found
 		if len(result.DomainNameConfigurations) == 0 {
-			return "", errors.New("DomainNameConfigurations not found")
+			return "", "", errors.New("DomainNameConfigurations not found")
 		}
 		// Return gateway domain
-		return *result.DomainNameConfigurations[0].ApiGatewayDomainName, nil
+		return *result.DomainNameConfigurations[0].HostedZoneId, *result.DomainNameConfigurations[0].ApiGatewayDomainName, nil
 	}
 }

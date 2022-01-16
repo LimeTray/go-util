@@ -93,13 +93,16 @@ func TestGetGatewayDomainByName(t *testing.T) {
 	awsutil.CreateGlobalSession()
 
 	domainName := os.Getenv("TEST_DOMAIN_NAME")
-	if name, err := awsutil.GetGatewayDomainByName(&domainName); err != nil {
+	if hostedZoneId, domain, err := awsutil.GetGatewayDomainByName(&domainName); err != nil {
 		t.Fatal(err.Error())
 	} else {
-		t.Log(name)
-		assert.NotNil(t, name)
-		assert.NotEmpty(t, name)
-		assert.Contains(t, name, "amazonaws.com")
+		t.Log(hostedZoneId)
+		assert.NotNil(t, hostedZoneId)
+		assert.NotEmpty(t, hostedZoneId)
+		t.Log(domain)
+		assert.NotNil(t, domain)
+		assert.NotEmpty(t, domain)
+		assert.Contains(t, domain, "amazonaws.com")
 	}
 }
 
@@ -111,6 +114,38 @@ func TestCreateApiMapping(t *testing.T) {
 	apiId := os.Getenv("TEST_API_ID")
 	stage := os.Getenv("TEST_STAGE")
 	if err := awsutil.CreateApiMapping(&apiId, &domainName, &stage); err != nil {
+		t.Fatal(err.Error())
+	}
+}
+
+func TestGetHostedZone(t *testing.T) {
+	enableDotEnv()
+	awsutil.CreateGlobalSession()
+	hostedZoneId := ""
+
+	if hostedZone, err := awsutil.GetHostedZone(&hostedZoneId); err != nil {
+		t.Fatal(err.Error())
+	} else {
+		assert.NotNil(t, hostedZone)
+		assert.Equal(t, &hostedZone.HostedZone.Id, hostedZoneId)
+		assert.NotNil(t, hostedZone.HostedZone.Name)
+	}
+}
+
+func TestCreateARecordAlias(t *testing.T) {
+	enableDotEnv()
+	awsutil.CreateGlobalSession()
+	hostedZoneId := os.Getenv("TEST_ROUTE53_HOSTEDZONE_ID")
+	domainName := os.Getenv("TEST_DOMAIN_NAME")
+	value := os.Getenv("TEST_GATEWAY_DOMAIN")
+	valueHostedZoneID := os.Getenv("TEST_GATEWAY_HOSTEDZONE_ID")
+
+	if err := awsutil.CreateARecordAlias(
+		&hostedZoneId,
+		&domainName,
+		&value,
+		&valueHostedZoneID,
+	); err != nil {
 		t.Fatal(err.Error())
 	}
 }
